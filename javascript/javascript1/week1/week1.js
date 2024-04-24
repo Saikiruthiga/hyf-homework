@@ -6,63 +6,101 @@ const age = yearFuture - yearOfBirth;
 console.log("You will be " + age + " years old in " + yearFuture);
 
 //Goodboy-Oldboy (A dog age calculator)
-console.log("******************* Goodboy-Oldboy (A dog age calculator) **********");
+console.log(
+  "******************* Goodboy-Oldboy (A dog age calculator) **********"
+);
 const dogYearOfBirth = 2017;
 const dogYearFuture = 2027;
 let dogYear;
+let yearType;
 const shouldShowResultInDogYears = false;
-if(shouldShowResultInDogYears){
-    dogYear = (dogYearFuture - dogYearOfBirth) * 7;
-    console.log("Your dog will be "+ dogYear + " dog years old in " +dogYearFuture);
+if (shouldShowResultInDogYears) {
+  dogYear = (dogYearFuture - dogYearOfBirth) * 7;
+} else {
+  dogYear = dogYearFuture - dogYearOfBirth;
 }
-else{
-    dogYear = (dogYearFuture - dogYearOfBirth);
-    console.log("Your dog will be "+ dogYear + " human years old in " +dogYearFuture);
+if (shouldShowResultInDogYears) {
+  yearType = "dog";
+} else {
+  yearType = "human";
 }
-
+console.log(
+  "Your dog will be " +
+    dogYear +
+    " " +
+    yearType +
+    " years old in " +
+    dogYearFuture
+);
 
 //Housey pricey (A house price estimator)
 console.log("********** Housey pricey (A house price estimator) *********");
-const peterHouseDetails = [8,10,10,100, 2500000];
-const juliaHouseDetails = [5,11,8,70,1000000]
-const peterVolumeInMeters = peterHouseDetails[0]*peterHouseDetails[1]*peterHouseDetails[2];
-const juliaVolumeInMeters = juliaHouseDetails[0]*juliaHouseDetails[1]*juliaHouseDetails[2];
+const peterHouseWidth = 8;
+const peterHouseDepth = 10;
+const peterHouseHeight = 10;
+const peterGardenSize = 100;
+const peterAmountPaid = 2500000;
 
-const peterHousePrice = peterVolumeInMeters * 2.5 * 1000 + peterHouseDetails[3] * 300;
-const juliaHousePrice = juliaVolumeInMeters * 2.5 * 1000 + juliaHouseDetails[3] * 300;
+const juliaHouseWidth = 5;
+const juliaHouseDepth = 11;
+const juliaHouseHeight = 8;
+const juliaGardenSize = 70;
+const juliaAmountPaid = 1000000;
+const peterVolumeInMeters =
+  peterHouseWidth * peterHouseDepth * peterHouseHeight;
+const juliaVolumeInMeters =
+  juliaHouseWidth * juliaHouseDepth * juliaHouseHeight;
 
-if (peterHousePrice>peterHouseDetails[4]){
-    console.log("Peter, You bought this house for a cheaper price");
+const peterHousePrice =
+  peterVolumeInMeters * 2.5 * 1000 + peterGardenSize * 300;
+const juliaHousePrice =
+  juliaVolumeInMeters * 2.5 * 1000 + juliaGardenSize * 300;
+
+if (peterHousePrice > peterAmountPaid) {
+  console.log("Peter, You bought this house for a cheaper price");
+} else if (peterHousePrice === peterAmountPaid) {
+  console.log("Peter, You bought this house for correct price");
+} else {
+  console.log("Peter, You bought this house for higher price");
 }
-else if(peterHousePrice===peterHouseDetails[4]){
-    console.log("Peter, You bought this house for correct price");
-}
-else{
-    console.log("Peter, You bought this house for higher price");
-}
-if (juliaHousePrice>juliaHouseDetails[4]){
-    console.log("Julia, You bought this house for a cheaper price");
-}
-else if(juliaHousePrice===juliaHouseDetails[4]){
-    console.log("Julia, You bought this house for correct price");
-}
-else{
-    console.log("Julia, You bought this house for higher price");
+if (juliaHousePrice > juliaAmountPaid) {
+  console.log("Julia, You bought this house for a cheaper price");
+} else if (juliaHousePrice === juliaAmountPaid) {
+  console.log("Julia, You bought this house for correct price");
+} else {
+  console.log("Julia, You bought this house for higher price");
 }
 
 //Ez Namey (Startup name generator) Optional
-console.log("************ Ez Namey (Startup name generator) Optional *****************");
-const firstWords = ["Easy", "Awesome", "Corporate", "NextGen", "Innovative", "Creative", "CodeCraft", "Hackers", "Digital", "IT" ];
-const secondWords = ["Solutions", "World", "Themes", "Hands", "Providers", "Services", "Group", "Waves", "Ground", "Players"];
+console.log(
+  "************ Ez Namey (Startup name generator) Optional *****************"
+);
+const firstWords = [
+  "Easy",
+  "Awesome",
+  "Corporate",
+  "NextGen",
+  "Innovative",
+  "Creative",
+  "CodeCraft",
+  "Hackers",
+  "Digital",
+  "IT",
+];
+const secondWords = [
+  "Solutions",
+  "World",
+  "Themes",
+  "Hands",
+  "Providers",
+  "Services",
+  "Group",
+  "Waves",
+  "Ground",
+  "Players",
+];
 const firstName = firstWords[Math.floor(Math.random() * 10)];
 const secondName = secondWords[Math.floor(Math.random() * 10)];
 const startupName = firstName + " " + secondName;
 const nameLength = startupName.length;
-console.log('The startup: "' + startupName + '" contains '+ nameLength + ' characters');
-
-
-
-
-
-
-
+console.log(`The startup: "${startupName}" contains ${nameLength} characters`);
