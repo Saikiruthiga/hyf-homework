@@ -17,21 +17,18 @@ console.log("**********************");
 function getFormalFullName(firstname, surname, useFormalName, gender) {
   if (!firstname || !surname) {
     return "Please provide your firstname and surname";
+  } else if (!useFormalName) {
+    return `${firstname} ${surname}`;
+  } else if (useFormalName && gender === "male") {
+    return `Lord ${firstname} ${surname}`;
+  } else if (useFormalName && gender === "female") {
+    return `Lady ${firstname} ${surname}`;
   } else {
-    if (useFormalName === false || !useFormalName) {
-      return `${firstname} ${surname}`;
-    } else if (typeof useFormalName !== "boolean") {
-      return "please mention useFormalName as true or false";
-    } else if (useFormalName === true && gender === "male") {
-      return `Lord ${firstname} ${surname}`;
-    } else if (useFormalName === true && gender === "female") {
-      return `Lady ${firstname} ${surname}`;
-    } else {
-      return "Please provide the gender";
-    }
+    return "Please provide the gender";
   }
 }
-const formalFullName1 = getFormalFullName("Benjamin", "Hughes", false);
+
+const formalFullName1 = getFormalFullName("Benjamin", "Hughes", true);
 const formalFullName2 = getFormalFullName("Ida", "Jones");
 console.log(
   `formalFullName1:${formalFullName1}\nformalFullName2:${formalFullName2}`
@@ -68,7 +65,7 @@ console.log("**********************");
 function selectClothes(temperature) {
   if (temperature <= 5) {
     return "Winter Jacket and Thermal Wear";
-  } else if (temperature > 5 && temperature < 18) {
+  } else if (temperature < 18) {
     return "Normal Jacket and Pant and T-shirt";
   } else if (temperature >= 18) {
     return "Shorts and a T-shirt";
@@ -76,7 +73,7 @@ function selectClothes(temperature) {
     return "Please provide the current temperature in degrees";
   }
 }
-const temperature = 18;
+const temperature = 15;
 const clothesToWear = selectClothes(temperature);
 console.log(clothesToWear);
 
@@ -87,19 +84,14 @@ console.log("**********************");
 let class07Students = [];
 function addStudentToClass(studentName) {
   studentName = studentName.toLowerCase();
-  if (
-    (class07Students.length < 6 &&
-      !class07Students.includes(studentName) &&
-      studentName !== "") ||
-    studentName === "mary elizabeth"
-  ) {
-    class07Students.push(studentName);
-  } else if (studentName === "") {
+  if (studentName === "") {
     console.log("Please provide the student name");
   } else if (class07Students.includes(studentName)) {
     console.log(`Student ${studentName} is already in the class`);
-  } else {
+  } else if (class07Students.length > 6 && studentName !== "mary elizabeth") {
     console.log("Cannot add more students to class 07");
+  } else {
+    class07Students.push(studentName);
   }
   return class07Students;
 }
@@ -125,8 +117,9 @@ console.log(getNumberOfStudents());
 console.log("**********************");
 console.log("Ex 6: Candy helper optional");
 console.log("**********************");
-let price = 0;
+const boughtCandyPrices = [];
 function addCandy(candyType, weight) {
+  let price = 0;
   candyType = candyType.toLowerCase();
   if (candyType === "sweet") {
     price = weight * 0.5;
@@ -141,37 +134,35 @@ function addCandy(candyType, weight) {
       "Please select the candyType as Sweet or Chocolate or Toffee or Chewing-gum"
     );
   }
-  return (price = Math.round(price));
+  boughtCandyPrices.push(price);
+  return boughtCandyPrices;
 }
-let boughtCandyPrices = [];
+
 addCandy("sweet", 15);
-boughtCandyPrices.push(price);
+addCandy("sweet", 20);
 addCandy("toffee", 20);
-boughtCandyPrices.push(price);
 addCandy("chocolate", 15);
-boughtCandyPrices.push(price);
 console.log(boughtCandyPrices);
 
-let amountSpent = 0;
-for (let i = 0; i < boughtCandyPrices.length; i++) {
-  amountSpent += boughtCandyPrices[i];
-}
-// using while loop
-/*let i = 0;
-while (i < boughtCandyPrices.length) {
-  amountSpent += boughtCandyPrices[i];
-  i++;
-}*/
-
 const amountToSpend = Math.round(Math.random() * 100);
-function canBuyMoreCandy() {
-  if (amountToSpend > amountSpent) {
-    console.log("Yes, You can buy more candy");
-  } else {
-    console.log("Enough candy for you!");
+let amountSpent = 0;
+function canBuyMoreCandy(boughtCandyPrices) {
+  for (let i = 0; i < boughtCandyPrices.length; i++) {
+    amountSpent += boughtCandyPrices[i];
   }
+  return amountToSpend > amountSpent;
+  // using while loop
+  /*let i = 0;
+  while (i < boughtCandyPrices.length) {
+    amountSpent += boughtCandyPrices[i];
+    i++;
+  }*/
 }
-
+const canBuy = canBuyMoreCandy(boughtCandyPrices);
+if (canBuy) {
+  console.log("Yes, You can buy more candy");
+} else {
+  console.log("Enough candy for you!");
+}
 console.log(`amountToSpend : ${amountToSpend}`);
 console.log(`amountSpent : ${amountSpent}`);
-canBuyMoreCandy();
