@@ -22,8 +22,8 @@ const travelInformation = {
   destinationDistance: 432,
 };
 function calcTravelTime(travelInfo) {
-  let time = travelInfo["destinationDistance"] / travelInfo["speed"];
-  const hours = parseInt(time);
+  const time = travelInfo["destinationDistance"] / travelInfo["speed"];
+  const hours = time;
   let minutes = (time - hours) * 60;
   minutes = Math.round(minutes);
   return `${hours} hours and ${minutes} minutes`;
@@ -55,8 +55,7 @@ const seriesDurations = [
 function logOutSeriesText(arrayofobjects) {
   let totalTime = 0;
   for (let i = 0; i < arrayofobjects.length; i++) {
-    let time;
-    time =
+    let time =
       arrayofobjects[i]["days"] * 24 * 60 +
       arrayofobjects[i]["hours"] * 60 +
       arrayofobjects[i]["minutes"];

@@ -2,9 +2,7 @@
 //Save a note
 let notes = [];
 function saveNote(content, id) {
-  let obj = {};
-  obj["content"] = content;
-  obj["id"] = id;
+  const obj = { content, id };
   notes.push(obj);
   return notes;
 }
@@ -15,20 +13,20 @@ console.log(notes);
 //Get a note
 function getNote(id) {
   for (let i = 0; i < notes.length; i++) {
-    if (notes[i]["id"] === id) {
+    if (notes[i].id === id) {
       return notes[i];
     } else {
       return "error";
     }
   }
 }
-const noteById = getNote("hai");
+const noteById = getNote(1);
 console.log(noteById);
 //Log out notes
 function logOutNotesFormatted(notes) {
   let formattedNotes = "";
   for (let i = 0; i < notes.length; i++) {
-    formattedNotes += `The note with id: ${notes[i]["id"]}, has the following note text: ${notes[i]["content"]}\n`;
+    formattedNotes += `The note with id: ${notes[i].id}, has the following note text: ${notes[i].content}\n`;
   }
   return formattedNotes;
 }
@@ -37,9 +35,9 @@ console.log(notesAfterFormat);
 //Unique feature - Update notes
 function updateNote(id, updatedContent, updatedId) {
   for (let i = 0; i < notes.length; i++) {
-    if (notes[i]["id"] === id) {
-      notes[i]["content"] = updatedContent;
-      notes[i]["id"] = updatedId;
+    if (notes[i].id === id) {
+      notes[i].content = updatedContent;
+      notes[i].id = updatedId;
       return notes;
     } else {
       return "error";
@@ -52,7 +50,7 @@ console.log(notesAfterUpdate);
 //Unique feature - Delete notes
 function deleteNote(id) {
   for (let i = 0; i < notes.length; i++) {
-    if (notes[i]["id"] === id) {
+    if (notes[i].id === id) {
       notes.splice(i, 1);
       return notes;
     } else {

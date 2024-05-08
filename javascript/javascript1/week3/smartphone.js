@@ -2,16 +2,13 @@
 //Adding an activity
 const activities = [];
 function addActivity(date, activity, duration) {
-  let obj = {};
-  obj["date"] = date;
-  obj["activity"] = activity;
-  obj["duration"] = duration;
+  let obj = { date, activity, duration };
   activities.push(obj);
   return activities;
 }
 
-addActivity("05/07/2024", "LinkedIn", 20);
-addActivity("05/07/2024", "Slack", 20);
+addActivity("5/8/2024", "LinkedIn", 20);
+addActivity("05/07/2024", "Slack", 50);
 addActivity("05/07/2024", "Whatsapp", 20);
 console.log(activities);
 
@@ -34,7 +31,8 @@ function showStatus(activities) {
 }
 
 //Usage limit
-function checkUsage(showStatus) {
+
+function checkUsage(activities) {
   const limit = 120;
   const { totalUsage } = showStatus(activities);
   if (totalUsage >= limit) {
@@ -43,16 +41,14 @@ function checkUsage(showStatus) {
     return "Yes, You can use your phone";
   }
 }
-const usage = checkUsage(showStatus);
+const usage = checkUsage(activities);
 console.log(usage);
 
 //Extra feature (improve the addActivity, so that we dont need to specify the date)
 let improvedActivities = [];
 function addActivityWithAutoDate(activity, duration) {
-  let obj = {};
-  obj["date"] = new Date().toLocaleDateString("en-US");
-  obj["activity"] = activity;
-  obj["duration"] = duration;
+  let date = new Date().toLocaleDateString("en-US");
+  let obj = { date, activity, duration };
   improvedActivities.push(obj);
   return improvedActivities;
 }
@@ -62,7 +58,8 @@ console.log(improvedActivities);
 //Extra feature (Improve showStatus() by only showing the number of actitivies for that specific day)
 
 function showStatusOnDate(activities) {
-  const date = "05/07/2024";
+  const date = new Date().toLocaleDateString("en-US");
+  console.log(date);
   let numberOfActivities = 0;
   for (let i = 0; i < activities.length; i++) {
     if (activities[i]["date"] === date) {
@@ -93,11 +90,9 @@ function calcMostUsedApp(activities) {
       break;
     }
   }
-  if (equalTimeSpent) {
-    return `You spent equal time on all activities`;
-  } else {
-    return `You spent ${timeSpent} min in ${activity}`;
-  }
+  return equalTimeSpent
+    ? `You spent equal time on all activities`
+    : `You spent ${timeSpent} min in ${activity}`;
 }
 
 const moreTimeSpentOn = calcMostUsedApp(activities);
