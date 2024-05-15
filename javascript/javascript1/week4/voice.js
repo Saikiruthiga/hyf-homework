@@ -1,35 +1,36 @@
 function getReply(command) {
-  switch (command) {
-    case "str1":
-      const userName = saveName(str1);
-      return `Nice to meet you ${userName}`;
-    case "str2":
-      if (!str1) {
-        return `you have not tell your name yet`;
-      }
-      const yourName = saveName(str1);
-      return `Your name is ${yourName}`;
-    case "str3":
-      return addActivity(str3);
-    case "str4":
-      return addActivity(str4);
-    case "str5":
-      return removeActivity(str5);
-    case "str6":
-      return `You have ${todo.length} todos - ${todo.join(" , ")}`;
-    case "str7":
-      return new Date().toLocaleDateString("en-US", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-    case "str8":
-      return calcOperations(str8);
-    case "str9":
-      setTimeout(timer, 4000);
-      return "Timer set for 4 seconds";
-    case "str10":
-      return guessAboutToday(str10);
+  if (command === str1) {
+    const userName = saveName(str1);
+    return `Nice to meet you ${userName}`;
+  } else if (command === str2) {
+    if (!str1) {
+      return `you have not tell your name yet`;
+    }
+    const yourName = saveName(str1);
+    return `Your name is ${yourName}`;
+  } else if (command === str3) {
+    return addActivity(str3);
+  } else if (command === str4) {
+    return addActivity(str4);
+  } else if (command === str5) {
+    return removeActivity(str5);
+  } else if (command === str6) {
+    return `You have ${todo.length} todos - ${todo.join(" , ")}`;
+  } else if (command === str7) {
+    return new Date().toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } else if (command === str8) {
+    return calcOperations(str8);
+  } else if (command === str9) {
+    setTimeout(timer, 4000);
+    return "Timer set for 4 seconds";
+  } else if (command === str10) {
+    return guessAboutToday(str10);
+  } else {
+    return "error";
   }
 }
 function saveName(string) {
@@ -106,16 +107,16 @@ const str8 = "what is 4 * 12";
 const str9 = "Set a timer for 4 seconds";
 const str10 = "How will the day be for me?";
 
-console.log(getReply("str1"));
-//console.log(getReply("str2"));
-//console.log(getReply("str3"));
-//console.log(todo);
-//console.log(getReply("str4"));
-//console.log(todo);
-//console.log(getReply("str5"));
-//console.log(todo);
-//console.log(getReply("str6"));
-//console.log(getReply("str7"));
-//console.log(getReply("str8"));
-//console.log(getReply("str9"));
-//console.log(getReply("str10"));
+console.log(getReply(str1));
+console.log(getReply(str2));
+console.log(getReply(str3));
+console.log(todo);
+console.log(getReply(str4));
+console.log(todo);
+console.log(getReply(str5));
+console.log(todo);
+console.log(getReply(str6));
+console.log(getReply(str7));
+console.log(getReply(str8));
+console.log(getReply(str9));
+console.log(getReply(str10));
