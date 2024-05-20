@@ -1,34 +1,46 @@
+let userName = "";
+const listArr = [];
+const str1 = "hello my name is benjamin";
+const str2 = "what is my name";
+const str3 = "add fishing to my todo";
+const str4 = "add singing in the shower to my todo";
+const str5 = "remove fishing from my todo";
+const str6 = "what is on my todo";
+const str7 = "what day is it today";
+const str8 = "what is 3 / 3";
+const str9 = "set timer for 4 seconds";
+const str10 = "how will the day be for me";
+
 function getReply(command) {
-  let result;
-  if (command.includes("hello my name is")) {
-    const userName = saveName(command);
+  let result = "";
+  if (command.includes(str1)) {
+    userName = saveName(command);
     result = `nice to meet you ${userName}`;
-  } else if (command.includes(str2)) {
-    if (!str1) {
-      result = `you have not tell your name yet`;
+  } else if (command.startsWith(str2)) {
+    if (userName) {
+      result = `return your name is ${userName}`;
+    } else {
+      result = `You have not tell your name yet`;
     }
-    const yourName = saveName(str1);
-    result = `Your name is ${yourName}`;
   } else if (command.includes("add")) {
     const activity = addActivity(command);
     result = `${activity} added to your todo`;
   } else if (command.includes("remove")) {
-    result = removeActivity(str5);
-  } else if (command.includes("what is on my")) {
-    const length = `You have ${listArr.length} todos - ${listArr.join(" , ")}`;
-    result = length;
+    result = removeActivity(command);
+  } else if (command.includes(str6)) {
+    return `You have ${listArr.length} todos - ${listArr.join(" , ")}`;
   } else if (command.includes(str7)) {
     result = new Date().toLocaleDateString("en-US", {
       day: "numeric",
       month: "long",
       year: "numeric",
     });
-  } else if (command.startsWith("what is")) {
+  } else if (command.includes(str8)) {
     return calcOperations(command);
   } else if (command.includes(str9)) {
     setTimeout(timer, 4000);
     result = "Timer set for 4 seconds";
-  } else if (command.includes("how will")) {
+  } else if (command.includes(str10)) {
     result = guessAboutToday();
   } else {
     result = "error";
@@ -52,9 +64,13 @@ function removeActivity(string) {
   const startIndex = string.indexOf("remove") + 7;
   const endIndex = string.indexOf("from my");
   const activity = string.substring(startIndex, endIndex).trim();
-  const index = listArr.indexOf(activity);
-  listArr.splice(index, 1);
-  return `Removed ${activity} from your todo`;
+  if (listArr.includes(activity)) {
+    const index = listArr.indexOf(activity);
+    listArr.splice(index, 1);
+    return `Removed ${activity} from your todo`;
+  } else {
+    return `Sorry, I couldn't find ${activity} in your todo`;
+  }
 }
 function calcOperations(string) {
   let output;
@@ -97,23 +113,9 @@ function guessAboutToday() {
   return todayLuck;
 }
 
-let listArr = [];
-//let str1;
-const str1 = "hello my name is kiruthiga";
-const str2 = "what is my name";
-const str3 = "add fishing to my todo";
-const str4 = "add singing in the shower to my todo";
-const str5 = "remove fishing from my todo";
-const str6 = "what is on my todo";
-const str7 = "what day is it today";
-const str8 = "what is 3 / 3";
-const str9 = "set timer for 4 seconds";
-const str10 = "how will the day be for me";
-
 console.log(getReply(str1));
 console.log(getReply(str2));
 console.log(getReply(str3));
-console.log(listArr);
 console.log(getReply(str4));
 console.log(getReply(str5));
 console.log(getReply(str6));
