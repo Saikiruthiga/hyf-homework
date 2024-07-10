@@ -286,6 +286,12 @@ create table menu (
     price DECIMAL(6, 2)
 );
 
+insert into
+    menu
+values (1, 'pasta', 50.00),
+    (2, 'Pizza', 150.50),
+    (3, 'Burger', 100.80);
+
 CREATE TABLE customer (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     name varchar(50),
@@ -293,6 +299,29 @@ CREATE TABLE customer (
     email varchar(100),
     phone int(10)
 );
+
+alter table customer AUTO_INCREMENT = 1;
+
+insert into
+    customer (name, address, email, phone)
+values (
+        'John',
+        '3 1th valby maskinfabriksvej valby',
+        'john_01@gmail.com',
+        235698
+    ),
+    (
+        'James',
+        '2 1th valby maskinfabriksvej valby',
+        'james_01@gmail.com',
+        23236588
+    ),
+    (
+        'Smith',
+        '1 1th valby peterdepodensvej valby',
+        'smith_01@gmail.com',
+        258963147
+    );
 
 CREATE TABLE `order` (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -302,6 +331,12 @@ CREATE TABLE `order` (
     constraint cust_id_fk Foreign Key (cust_id) REFERENCES customer (id)
 );
 
+insert into
+    `order`
+values (1, 200.00, '2014-03-12', 2),
+    (2, 150.00, '2014-03-13', 1),
+    (3, 50.00, '2014-03-12', 3);
+
 create table menu_cust (
     menu_id int,
     cust_id int,
@@ -310,6 +345,8 @@ create table menu_cust (
     constraint menu_id_fk Foreign Key (menu_id) REFERENCES menu (id)
 );
 
+insert into menu_cust values (1, 2), (1, 3), (2, 2), (3, 2);
+
 create table menu_order (
     menu_id int,
     order_id int,
@@ -317,3 +354,5 @@ create table menu_order (
     constraint menu_order_fk Foreign Key (menu_id) REFERENCES menu (id),
     constraint order_id_fk Foreign Key (order_id) REFERENCES `order` (id)
 );
+
+insert into menu_order values (1, 2), (1, 1), (1, 3), (3, 3);
