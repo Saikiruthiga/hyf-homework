@@ -25,6 +25,8 @@ where
 -- Creating Database for the ERD
 create database blog;
 
+use blog;
+
 create table authors (
     id int PRIMARY key AUTO_INCREMENT,
     name varchar(100) not null
@@ -137,7 +139,7 @@ values (
         1
     );
 -- b) Change the title of a task
-update task set title = 'Learning' ORDER BY updated DESC limit 1;
+update task set title = 'Learning' where id = 36;
 -- c) Change a task due date
 update task
 set
@@ -145,11 +147,11 @@ set
 where
     id = 36;
 -- d) Change a task status
-update task set status_id = 2 ORDER BY updated desc limit 1;
+update task set status_id = 2 where id = 36;
 -- e) Mark a task as complete
-update task set status_id = 3 ORDER BY updated desc limit 1;
+update task set status_id = 3 where id = 36;
 -- f) Delete a task
-delete from task ORDER BY updated desc limit 1;
+delete from task where id = 36;
 
 /* Part 2: School database
 Create a new database containing the following tables:
@@ -157,6 +159,8 @@ Class: with the columns: id, name, begins (date), ends (date)
 Student: with the columns: id, name, email, phone, class_id (foreign key) */
 
 create database school_1;
+
+use school_1;
 
 create table class (
     id int PRIMARY key AUTO_INCREMENT,
@@ -236,49 +240,144 @@ values (
         2
     );
 -- Part 3: More queries
+use testdatabase;
+
+CREATE TABLE `user_task` (
+    `user_id` int(10) unsigned NOT NULL,
+    `task_id` int(10) unsigned NOT NULL,
+    PRIMARY KEY (`user_id`, `task_id`),
+    CONSTRAINT `fk_user_task_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_user_task_task` FOREIGN KEY (`task_id`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+insert into user_task (user_id, task_id) values (1, 5);
+
+insert into user_task (user_id, task_id) values (1, 35);
+
+insert into user_task (user_id, task_id) values (1, 11);
+
+insert into user_task (user_id, task_id) values (2, 4);
+
+insert into user_task (user_id, task_id) values (2, 26);
+
+insert into user_task (user_id, task_id) values (2, 29);
+
+insert into user_task (user_id, task_id) values (3, 22);
+
+insert into user_task (user_id, task_id) values (3, 13);
+
+insert into user_task (user_id, task_id) values (3, 19);
+
+insert into user_task (user_id, task_id) values (4, 24);
+
+insert into user_task (user_id, task_id) values (4, 20);
+
+insert into user_task (user_id, task_id) values (5, 20);
+
+insert into user_task (user_id, task_id) values (5, 18);
+
+insert into user_task (user_id, task_id) values (5, 15);
+
+insert into user_task (user_id, task_id) values (6, 10);
+
+insert into user_task (user_id, task_id) values (6, 7);
+
+insert into user_task (user_id, task_id) values (6, 27);
+
+insert into user_task (user_id, task_id) values (7, 33);
+
+insert into user_task (user_id, task_id) values (7, 18);
+
+insert into user_task (user_id, task_id) values (7, 23);
+
+insert into user_task (user_id, task_id) values (8, 26);
+
+insert into user_task (user_id, task_id) values (8, 30);
+
+insert into user_task (user_id, task_id) values (8, 11);
+
+insert into user_task (user_id, task_id) values (9, 34);
+
+insert into user_task (user_id, task_id) values (9, 15);
+
+insert into user_task (user_id, task_id) values (9, 1);
+
+insert into user_task (user_id, task_id) values (10, 29);
+
+insert into user_task (user_id, task_id) values (10, 16);
+
+insert into user_task (user_id, task_id) values (10, 1);
+
+insert into user_task (user_id, task_id) values (11, 26);
+
+insert into user_task (user_id, task_id) values (11, 27);
+
+insert into user_task (user_id, task_id) values (11, 17);
+
+insert into user_task (user_id, task_id) values (11, 2);
+
+insert into user_task (user_id, task_id) values (1, 3);
+
+insert into user_task (user_id, task_id) values (2, 6);
+
+insert into user_task (user_id, task_id) values (3, 8);
+
+insert into user_task (user_id, task_id) values (4, 9);
+
+insert into user_task (user_id, task_id) values (5, 12);
+
+insert into user_task (user_id, task_id) values (6, 14);
+
+insert into user_task (user_id, task_id) values (7, 21);
+
+insert into user_task (user_id, task_id) values (8, 25);
+
+insert into user_task (user_id, task_id) values (9, 28);
+
+insert into user_task (user_id, task_id) values (10, 31);
+
+insert into user_task (user_id, task_id) values (11, 32);
+
 -- Get all the tasks assigned to users whose email ends in @spotify.com
-select user.name as Name, user.email as Email, task.title as Task
-from user
-    join task on user.id = task.user_id
+select task.title as Task, user.name as Name, user.email as email
+from task
+    join user_task on task.id = user_task.task_id
+    join user on user_task.user_id = user.id
 where
-    email like '%spotify.com';
+    user.email like '%@spotify.com';
+
 -- Get all the tasks for 'Donald Duck' with status 'Not started'
-select user.name as Name, task.title as Task, status.name as Status
-from user
-    join task on user.id = task.user_id
+select task.title as task, user.name as name, status.name as status
+from
+    task
+    join user_task on task.id = user_task.task_id
+    join user on user_task.user_id = user.id
     join status on task.status_id = status.id
 where
-    user.name = 'donald duck'
-    and status.name = 'not started';
--- Get all the tasks for 'Maryrose Meadows' that were created in september (hint: month(created)=month_number)
-select *
-from task
-where
-    user_id = (
-        select id
-        from user
-        where
-            name = 'Maryrose Meadows'
-    )
-    and MONTH(created) = 09;
+    user.name = 'Donald Duck'
+    and status.name = 'Not started';
 
-select user.name as Name, task.title as Task, task.created as Month
-from user
-    join task on user.id = task.user_id
+-- Get all the tasks for 'Maryrose Meadows' that were created in september (hint: month(created)=month_number)
+select task.title as task, user.name as name, task.created as month
+from task
+    join user_task on task.id = user_task.task_id
+    join user on user.id = user_task.user_id
 where
     user.name = 'Maryrose Meadows'
-    and MONTH(created) = 9;
+    and MONTH(created) = '09';
 
 /*Find how many tasks where created in each month, e.g. how many tasks were created in october, 
 how many tasks were created in november, etc. (hint: use group by) */
 
-select count(id) as Task_Count, MONTH(created) as Month
+select count(*) as task_count, MONTH(created) as month
 from task
 GROUP BY
-    Month;
+    MONTH(created);
 
 -- Part 4: Creating a database
 create database restuarant;
+
+use restuarant;
 
 create table menu (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -356,3 +455,7 @@ create table menu_order (
 );
 
 insert into menu_order values (1, 2), (1, 1), (1, 3), (3, 3);
+
+use restuarant;
+
+drop table menu_cust;
