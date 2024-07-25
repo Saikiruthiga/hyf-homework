@@ -17,6 +17,30 @@ CREATE TABLE meal (
     created_date DATE NOT NULL
 );
 
+set foreign_key_checks = 0;
+
+ALTER Table meal MODIFY id int AUTO_INCREMENT;
+
+insert into
+    meal (
+        title,
+        description,
+        location,
+        `when`,
+        max_reservations,
+        price,
+        created_date
+    )
+values (
+        'Smørrebrød',
+        'This dish is typically made with a slice of dense, dark rye bread (rugbrød) as the base. The bread is generously buttered and then topped with a variety of ingredients',
+        'Denmark',
+        '2024-08-19 07:00:35',
+        20,
+        50,
+        '2024-07-11'
+    );
+
 insert into
     meal
 values (
@@ -111,6 +135,8 @@ CREATE TABLE reservation (
     contact_email VARCHAR(100)
 );
 
+alter Table reservation modify id int AUTO_INCREMENT;
+
 insert into
     reservation
 values (
@@ -150,6 +176,10 @@ CREATE TABLE review (
     stars INT NOT NULL,
     created_date DATE NOT NULL
 );
+
+alter Table review modify id int AUTO_INCREMENT;
+
+set foreign_key_checks = 1;
 
 insert into
     review
@@ -356,6 +386,7 @@ where
 select * from meal order by rand() limit 5;
 
 -- Get the meals that have good reviews
+-- innerjoin
 select meal.id, meal.title, rev.title, rev.stars, rev.meal_id
 from meal
     join (
@@ -365,7 +396,14 @@ from meal
             stars > 3
     ) as rev on meal.id = rev.meal_id;
 
--- Get reservations for a specific meal sorted by created_date
+-- normal join
+select meal.id, meal.title, rev.title, rev.stars, rev.meal_id
+from meal
+    join review as rev on meal.id = rev.meal_id
+where
+    rev.stars > 3;
+
+-- Get reservations for a specific meal sorted by created_date using innerjoin
 select meal.title, A.number_of_guests, A.created_date
 from meal
     join (
@@ -375,6 +413,14 @@ from meal
             meal_id = 3
         ORDER BY created_date ASC
     ) as A on meal.id = A.meal_id;
+
+-- using normal join
+select meal.title, res.number_of_guests, res.created_date
+from meal
+    join reservation as res on meal.id = res.meal_id
+where
+    meal.id = 3
+ORDER BY res.created_date ASC;
 
 -- Sort all meals by average number of stars in the reviews
 select meal.title, avg(review.stars) as average
