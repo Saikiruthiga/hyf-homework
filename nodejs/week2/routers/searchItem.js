@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-//import documents from "../documents.json" assert { type: "json" };
 
 router.get("/", async (request, response) => {
   const documents = request.documents;
