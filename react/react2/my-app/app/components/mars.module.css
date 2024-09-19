@@ -1,0 +1,12 @@
+.image{
+    width:100%;
+    max-width: 300px;
+    height:auto;
+    border-radius: 10px;
+}
+.container{
+  padding:15px;
+  max-width: 320px;
+  display: inline-flex;
+  margin: 60px;
+}
